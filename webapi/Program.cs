@@ -1,6 +1,11 @@
+using webapi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.Configure<GamerFinderDatabaseSettings>(
+    builder.Configuration.GetSection("GamerFinderDatabase"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
