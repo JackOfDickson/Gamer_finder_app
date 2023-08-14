@@ -1,5 +1,6 @@
 import React from 'react';
 import NewUserForm from './containers/NewUserForm';
+import UserLoginForm from './containers/UserLoginForm';
 
 
 
@@ -8,7 +9,9 @@ function App() {
     <div className="App">
       <header className="App-header">
               <p>Hello</p>
-              <NewUserForm></NewUserForm>
+              <UserLoginForm/>
+              <NewUserForm/>
+              
       </header>
     </div>
   );
