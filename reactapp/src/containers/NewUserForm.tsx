@@ -22,7 +22,7 @@ const NewUserForm = () => {
             </form>
 
 
-     </div>
+    </div>
     )
 }
 

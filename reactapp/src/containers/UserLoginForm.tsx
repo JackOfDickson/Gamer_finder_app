@@ -1,9 +1,21 @@
 import { useState } from "react";
+import { decryptData, encryptData } from "../services/cryptoService";
 
 const UserLoginForm = () => {
 
     const [inputUsername, setInputUsername] = useState("")
     const [inputPassword, setInputPassword] = useState("")
+
+    const requestLogin = () => {
+        const encryptedUsername = encryptData(inputUsername)
+        console.log(encryptedUsername)
+        const decryptedUsername = decryptData(encryptedUsername)
+        console.log(decryptedUsername)
+        // const encryptedPassword = encryptData(inputPassword)
+        // console.log(encryptedPassword)
+        // const decryptedPassword = decryptData(encryptedPassword)
+        // console.log(decryptedPassword)
+    }
 
 
     return (
@@ -13,8 +25,8 @@ const UserLoginForm = () => {
             <input type="text" id="login-username" value={inputUsername} onChange={(event) => setInputUsername(event.target.value)}/>
             <br/>
             <label htmlFor="login-password">Password</label>
-            <input type="text" id="login-password" value={inputPassword} onChange={(event) => setInputPassword(event.target.value)}/>
-
+            <input type="password" id="login-password" value={inputPassword} onChange={(event) => setInputPassword(event.target.value)}/>
+            <button onClick={requestLogin}>Submit</button>
         </div>
     )
 }
