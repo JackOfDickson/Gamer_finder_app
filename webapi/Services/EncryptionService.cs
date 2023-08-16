@@ -28,18 +28,24 @@ namespace webapi.Services
 			byte[] ciphertext = new byte[encryptedBytes.Length - 16];
             Array.Copy(encryptedBytes, 16, ciphertext, 0, ciphertext.Length);
 
-            //byte[] key = Encoding.UTF8.GetBytes(secretKey);
-
 			using (Aes myAes = Aes.Create())
+			{
+				myAes.IV = iv;
+				myAes.Key = Encoding.UTF8.GetBytes(secretKey);
+
+				ICryptoTransform decryptor = myAes.CreateDecryptor(myAes.Key, myAes.IV);
+
+				using (MemoryStream msDecrypt = new MemoryStream(ciphertext))
 				{
-					myAes.IV = iv;
-					myAes.Key = Encoding.UTF8.GetBytes(secretKey);
+					using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+					{
+						using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+						{
+                         return srDecrypt.ReadToEnd();
+						}
+					}
 				}
-
-
-            string decryptedData = "";
-			return decryptedData;
+			}
 		}
 	}
 }
-
