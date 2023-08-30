@@ -15,10 +15,10 @@ namespace webapi.Models
         [BsonElement("password")]
         public string Password { get; set; }
 
-        public UserCredentials(string id, string user_id, string password)
+        public UserCredentials(string id, string userId, string password)
         {
             Id = id;
-            UserId = user_id;
+            UserId = userId;
             Password = password;
         }
     }
