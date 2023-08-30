@@ -11,15 +11,13 @@ namespace webapi.Models
         public string Username {  get ; set; }
         [BsonElement("email")]
         public string Email { get; set; }
-        [BsonElement("password")]
-        public string Password { get; set; }
 
-        public User(string id, string username, string email, string password)
+
+        public User(string id, string username, string email)
         {
             Id = id;
             Username = username;
             Email = email;
-            Password = password;
         }
     }
 }
