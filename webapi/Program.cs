@@ -9,6 +9,7 @@ builder.Services.Configure<GamerFinderDatabaseSettings>(
     builder.Configuration.GetSection("GamerFinderDatabase"));
 
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<UserCredentialsService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
