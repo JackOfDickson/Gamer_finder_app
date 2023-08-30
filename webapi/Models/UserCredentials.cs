@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 namespace webapi.Models
 {
-	public class UserCrendtials
+	public class UserCredentials
 	{
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -15,16 +15,12 @@ namespace webapi.Models
         [BsonElement("password")]
         public string Password { get; set; }
 
-
-
-
-
-
-
-
-        public UserCrendtials()
-		{
-		}
-	}
+        public UserCredentials(string id, string user_id, string password)
+        {
+            Id = id;
+            User_id = user_id;
+            Password = password;
+        }
+    }
 }
 
