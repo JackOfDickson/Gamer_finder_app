@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 
-const NewUserForm = () => {
+function NewUserForm() {
 
     const [inputUsername, setInputUsername] = useState('')
     const [inputEmail, setInputEmail] = useState('')

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { decryptData, encryptData } from "../services/cryptoService";
 
-const UserLoginForm = () => {
+function UserLoginForm() {
 
     const [inputUsername, setInputUsername] = useState("")
     const [inputPassword, setInputPassword] = useState("")
