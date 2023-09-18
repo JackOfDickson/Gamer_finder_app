@@ -1,7 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using webapi.Models;
 using webapi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<GamerFinderDatabaseSettings>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 

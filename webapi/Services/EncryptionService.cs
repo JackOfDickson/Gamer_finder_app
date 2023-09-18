@@ -41,7 +41,7 @@ namespace webapi.Services
 					{
 						using (StreamReader srDecrypt = new StreamReader(csDecrypt))
 						{
-                         return srDecrypt.ReadToEnd();
+                            return srDecrypt.ReadToEnd();
 						}
 					}
 				}
