@@ -7,7 +7,7 @@ namespace webapi.Models
 	{
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
@@ -15,9 +15,8 @@ namespace webapi.Models
         [BsonElement("password")]
         public string Password { get; set; }
 
-        public UserCredentials(string id, string userId, string password)
+        public UserCredentials(string userId, string password)
         {
-            Id = id;
             UserId = userId;
             Password = password;
         }

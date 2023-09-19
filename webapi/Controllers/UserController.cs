@@ -9,8 +9,13 @@ namespace webapi.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly UserCredentialsService _userCredentialsService;
 
-        public UserController(UserService userService) => _userService = userService;
+        public UserController(UserService userService, UserCredentialsService userCredentialsService)
+        {
+            _userService = userService;
+            _userCredentialsService = userCredentialsService;
+        }
 
         [HttpGet]
         public async Task<List<User>> Get() => await _userService.GetUsers();
@@ -29,9 +34,15 @@ namespace webapi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterUser([FromBody] User newUser)
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationData userRegistrationData)
         {
+            User newUser = userRegistrationData.CreateUserObject();
+
             await _userService.CreateUser(newUser);
+
+            UserCredentials userCredentials = userRegistrationData.CreateUserCredentialsObject(newUser.Id);
+
+            await _userCredentialsService.CreateUserCredentials(userCredentials);
 
             return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
         }
