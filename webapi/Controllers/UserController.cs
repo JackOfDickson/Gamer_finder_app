@@ -2,6 +2,11 @@
 using System;
 using webapi.Services;
 using webapi.Models;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using webapi.Models.AppSettings;
+using System.IdentityModel.Tokens.Jwt;
+
 namespace webapi.Controllers
 {
     [ApiController]
@@ -10,11 +15,13 @@ namespace webapi.Controllers
     {
         private readonly UserService _userService;
         private readonly UserCredentialsService _userCredentialsService;
+        private readonly IConfiguration _configuration;
 
-        public UserController(UserService userService, UserCredentialsService userCredentialsService)
+        public UserController(UserService userService, UserCredentialsService userCredentialsService, IConfiguration configuration)
         {
             _userService = userService;
             _userCredentialsService = userCredentialsService;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -37,13 +44,11 @@ namespace webapi.Controllers
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationData userRegistrationData)
         {
             User newUser = userRegistrationData.CreateUserObject();
-
             await _userService.CreateUser(newUser);
 
             userRegistrationData.Password = EncryptionService.Encrypt(userRegistrationData.Password);
 
             UserCredentials userCredentials = userRegistrationData.CreateUserCredentialsObject(newUser.Id);
-
             await _userCredentialsService.CreateUserCredentials(userCredentials);
 
             return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
@@ -51,23 +56,47 @@ namespace webapi.Controllers
 
 
         [HttpPost("login")]
-        public async Task<IActionResult>? LoginUser([FromBody] LoginRequest loginRequest)
+        public async Task<ActionResult<string>>? LoginUser([FromBody] LoginRequest loginRequest)
         {
             var user = await _userService.GetUserByUsername(loginRequest.Username);
             var userCreds = await _userCredentialsService.GetUserCredentialsByUserId(user.Id);
 
             if (userCreds is null)
             {
-                return NotFound();
+                return BadRequest("password or username incorrect");
             }
 
             if (EncryptionService.Decrypt(userCreds.Password) == loginRequest.Password)
             {
-                return (IActionResult)userCreds;
+                string jwt = createJwtToken(user);
+                return Ok(jwt);
             }
 
-            return (IActionResult)user;
+            return BadRequest("password or username incorrect");
 
+        }
+
+        private string createJwtToken(User user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username)
+            };
+            JwtSettings jwtSettings = new JwtSettings();
+            _configuration.GetSection("JwtSettings").Bind(jwtSettings);
+
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtSettings.Key));
+
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddHours(2),
+                signingCredentials: credentials);
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
         }
     }
 
