@@ -24,7 +24,7 @@ namespace webapi.Services
             using (Aes myAes = Aes.Create())
             {
                 myAes.Key = Encoding.UTF8.GetBytes(secretKey);
-                myAes.IV = GenerateRandomBytes(16 );
+                myAes.IV = GenerateRandomBytes(16);
 
                 ICryptoTransform encryptor = myAes.CreateEncryptor(myAes.Key, myAes.IV);
 

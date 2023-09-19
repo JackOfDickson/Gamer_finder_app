@@ -50,11 +50,25 @@ namespace webapi.Controllers
         }
 
 
-        //[HttpPost("login")]
-        //public async Task<IActionResult> LoginUser(string userId, [FromBody] LoginRequest loginRequest )
-        //{
+        [HttpPost("login")]
+        public async Task<IActionResult>? LoginUser([FromBody] LoginRequest loginRequest)
+        {
+            var user = await _userService.GetUserByUsername(loginRequest.Username);
+            var userCreds = await _userCredentialsService.GetUserCredentialsByUserId(user.Id);
 
-        //}
+            if (userCreds is null)
+            {
+                return NotFound();
+            }
+
+            if (EncryptionService.Decrypt(userCreds.Password) == loginRequest.Password)
+            {
+                return (IActionResult)userCreds;
+            }
+
+            return (IActionResult)user;
+
+        }
     }
 
 }

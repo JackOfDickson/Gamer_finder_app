@@ -23,6 +23,9 @@ namespace webapi.Services
         public async Task<UserCredentials?> GetUserCredentials(string id) =>
             await _userCredentialsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
+        public async Task<UserCredentials?> GetUserCredentialsByUserId(string userId) =>
+            await _userCredentialsCollection.Find(x => x.UserId == userId).FirstOrDefaultAsync();
+
         public async Task CreateUserCredentials(UserCredentials UserCredentials) =>
             await _userCredentialsCollection.InsertOneAsync(UserCredentials);
 
