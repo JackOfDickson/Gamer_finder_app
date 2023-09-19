@@ -40,6 +40,8 @@ namespace webapi.Controllers
 
             await _userService.CreateUser(newUser);
 
+            userRegistrationData.Password = EncryptionService.Encrypt(userRegistrationData.Password);
+
             UserCredentials userCredentials = userRegistrationData.CreateUserCredentialsObject(newUser.Id);
 
             await _userCredentialsService.CreateUserCredentials(userCredentials);
