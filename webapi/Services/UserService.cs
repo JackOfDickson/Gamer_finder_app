@@ -1,4 +1,5 @@
 ﻿using webapi.Models;
+using webapi.Models.AppSettings;
 using MongoDB.Driver;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Options;

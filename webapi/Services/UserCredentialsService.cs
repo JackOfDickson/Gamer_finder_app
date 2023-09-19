@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using webapi.Models;
+using webapi.Models.AppSettings;
 
 namespace webapi.Services
 {

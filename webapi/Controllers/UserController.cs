@@ -28,11 +28,20 @@ namespace webapi.Controllers
             return user;
         }
 
-        [HttpPost("{id:length(24)}/login")]
-        public async Task<IActionResult> LoginUser(string userId, [FromBody] LoginRequest loginRequest )
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser([FromBody] User newUser)
         {
+            await _userService.CreateUser(newUser);
 
+            return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
         }
+
+
+        //[HttpPost("login")]
+        //public async Task<IActionResult> LoginUser(string userId, [FromBody] LoginRequest loginRequest )
+        //{
+
+        //}
     }
 
 }

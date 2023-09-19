@@ -26,10 +26,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Models\AppSettings\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Properties\launchSettings.json" Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\AppSettings\" />
   </ItemGroup>
 </Project>

@@ -1,17 +1,41 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using webapi.Models;
+using webapi.Models.AppSettings;
 using webapi.Services;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<GamerFinderDatabaseSettings>()
-    .AddDefaultTokenProviders();
+
 
 // Add services to the container.
 
 builder.Services.Configure<GamerFinderDatabaseSettings>(
     builder.Configuration.GetSection("GamerFinderDatabase"));
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings"));
+
+var jwtSettings = new JwtSettings();
+builder.Configuration.GetSection("JwtSettings").Bind(jwtSettings);
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidateLifetime = true,
+//            ValidateIssuerSigningKey = true,
+//            ValidIssuer = jwtSettings.Issuer,
+//            ValidAudience = jwtSettings.Audience,
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+//            ClockSkew = TimeSpan.Zero // Set the clock skew to zero to account for any time differences
+//        };
+//    });
 
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<UserCredentialsService>();
@@ -31,7 +55,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseAuthorization();
+
 
 app.MapControllers();
 

@@ -6,16 +6,15 @@ namespace webapi.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
         [BsonElement("username")]
         public string Username {  get ; set; }
         [BsonElement("email")]
         public string Email { get; set; }
 
 
-        public User(string id, string username, string email)
+        public User(string username, string email)
         {
-            Id = id;
             Username = username;
             Email = email;
         }
