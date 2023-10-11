@@ -74,7 +74,11 @@ namespace webapi.Controllers
             if (EncryptionService.Decrypt(userCreds.Password) == loginRequest.Password)
             {
                 string jwt = createJwtToken(user);
-                return Ok(jwt);
+                var response = new
+                {
+                    token = jwt
+                };
+                return Ok(response);
             }
 
             return BadRequest("password or username incorrect");
