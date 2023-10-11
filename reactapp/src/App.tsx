@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import NewUserForm from './containers/NewUserForm';
-import UserLoginForm from './containers/UserLoginForm';
+import NewUserForm from './components/NewUserForm';
+import UserLoginForm from './components/UserLoginForm';
 
 
 
