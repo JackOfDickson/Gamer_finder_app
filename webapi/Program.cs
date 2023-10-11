@@ -6,9 +6,21 @@ using webapi.Models;
 using webapi.Models.AppSettings;
 using webapi.Services;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
+var AllowedSpecificOrigins = "_allowedSpecificOrigins";
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowedSpecificOrigins,
+                        policy  =>
+                        {
+                            policy.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                        });
+});
 
 
 // Add services to the container.
@@ -52,7 +64,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseRouting();
+app.UseCors(AllowedSpecificOrigins);
 app.UseHttpsRedirection();
 
 //app.UseAuthentication();

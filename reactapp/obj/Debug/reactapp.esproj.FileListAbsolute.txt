@@ -1,2 +1,2 @@
-C:\Users\jacko\Documents\coding\gamer_finder\reactapp\obj\Debug\reactapp.esproj.SuggestedBindingRedirects.cache
-C:\Users\jacko\Documents\coding\gamer_finder\reactapp\obj\Debug\reactapp.esproj.CoreCompileInputs.cache
+C:/Users/jacko/Documents/coding/gamer_finder/reactapp/obj/Debug/reactapp.esproj.SuggestedBindingRedirects.cache
+C:/Users/jacko/Documents/coding/gamer_finder/reactapp/obj/Debug/reactapp.esproj.CoreCompileInputs.cache
