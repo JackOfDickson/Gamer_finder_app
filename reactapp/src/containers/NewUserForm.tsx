@@ -1,16 +1,28 @@
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
+import { registerUser } from '../services/serverService'
+import newUserInfo from '../types/newUserInfo'
 
 
 function NewUserForm() {
 
-    const [inputUsername, setInputUsername] = useState('')
-    const [inputEmail, setInputEmail] = useState('')
-    const [inputPassword, setInputPassword] = useState('')
+    const [inputUsername, setInputUsername] = useState("")
+    const [inputEmail, setInputEmail] = useState("")
+    const [inputPassword, setInputPassword] = useState("")
+
+    const handleNewUserSubmit = (evt: FormEvent) => {
+        evt.preventDefault()
+        const newUser: newUserInfo = {
+            username: inputUsername,
+            email: inputEmail,
+            password: inputPassword
+        }
+        registerUser(newUser)
+    }
 
     return (
     <div>
         <p>I'm a user form</p>
-            <form>
+            <form onSubmit={handleNewUserSubmit}>
                 <label htmlFor='input-username'>Username:</label>
                 <input type='text' id='input-username' value={inputUsername} onChange={(event) => setInputUsername(event.target.value)} required />
                 <br/>
@@ -19,6 +31,7 @@ function NewUserForm() {
                 <br/>
                 <label htmlFor='input-password'>Password:</label>
                 <input type='text' id='input-password' value={inputPassword} onChange={(event) => setInputPassword(event.target.value)} required />
+                <input type='submit'/>
             </form>
 
 

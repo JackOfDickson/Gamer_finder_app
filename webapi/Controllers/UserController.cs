@@ -48,9 +48,14 @@ namespace webapi.Controllers
 
             userRegistrationData.Password = EncryptionService.Encrypt(userRegistrationData.Password);
 
-            UserCredentials userCredentials = userRegistrationData.CreateUserCredentialsObject(newUser.Id);
-            await _userCredentialsService.CreateUserCredentials(userCredentials);
-
+            if (newUser.Id != null)
+            {
+                UserCredentials userCredentials = userRegistrationData.CreateUserCredentialsObject(newUser.Id);
+                await _userCredentialsService.CreateUserCredentials(userCredentials);
+            } else
+            {
+                return StatusCode(500);
+            }
             return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
         }
 
