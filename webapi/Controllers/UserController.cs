@@ -81,7 +81,7 @@ namespace webapi.Controllers
                 return Ok(response);
             }
 
-            return BadRequest("password or username incorrect");
+            return Unauthorized("password or username incorrect");
 
         }
 

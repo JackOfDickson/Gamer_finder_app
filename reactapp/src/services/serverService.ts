@@ -19,5 +19,11 @@ export const loginUser = async (loginInfo: loginInfo) => {
         method: 'POST',
         body: JSON.stringify(loginInfo),
         headers: {'Content-Type': 'application/json'}
-    }).then(response_jwt => response_jwt.json())
+    }).then(response => { 
+        if (response.ok) {
+            return response.json()
+        }
+        else throw Error("Unauthorised")
+    })
+    .catch(error => console.log(error))
 }
