@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import NewUserForm from './components/NewUserForm';
-import UserLoginForm from './components/UserLoginForm';
+import BasePage from './pages/BasePage';
 
 
 
@@ -10,10 +9,7 @@ function App() {
     
     <div className="App">
       <header className="App-header">
-              <p>Hello</p>
-              <UserLoginForm/>
-              <NewUserForm/>
-              
+        <BasePage/>
       </header>
     </div>
   );
